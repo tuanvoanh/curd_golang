@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"../models"
+	"API_BASIC_LEARN/models"
+
 	"github.com/gin-gonic/gin"
 )
 

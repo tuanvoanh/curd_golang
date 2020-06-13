@@ -1,0 +1,34 @@
+version: '2'
+volumes:
+  db_data:
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql_db
+    volumes:
+      - db_data:/data/msql/db
+    restart: always
+    ports:
+      - 127.0.0.1:3308:3306 
+    environment:
+      MYSQL_ROOT_PASSWORD: rootTuan4120
+      MYSQL_DATABASE: test
+      MYSQL_USER: tuan
+      MYSQL_PASSWORD: Tuan4120
+
+  app:
+    build:
+      context: ./
+    volumes:
+      - "./:/go"
+    ports:
+      - "8080:3001"
+    tty: true
+    environment:
+      - DB_URL=tuan:Tuan4120@tcp(db:3306)/test?charset=utf8&parseTime=True&loc=Local
+      - PORT=3001
+
+    depends_on:
+      - db
+    links:
+      - db

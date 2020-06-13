@@ -1,7 +1,7 @@
 package models
 
 import (
-	"../configs"
+	"API_BASIC_LEARN/configs"
 )
 
 func GetAllBook(b *[]Book) (err error) {
