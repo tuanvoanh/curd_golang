@@ -1,36 +1,36 @@
 package models
 
 import (
-	"API_BASIC_LEARN/configs"
+	"github.com/jinzhu/gorm"
 )
 
-func GetAllBook(b *[]Book) (err error) {
-	if err = configs.DB.Find(b).Error; err != nil {
+func GetAllBook(DB *gorm.DB, b *[]Book) (err error) {
+	if err = DB.Find(b).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func AddNewBook(b *Book) (err error) {
-	if err = configs.DB.Create(b).Error; err != nil {
+func AddNewBook(DB *gorm.DB, b *Book) (err error) {
+	if err = DB.Create(b).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func GetOneBook(b *Book, id string) (err error) {
-	if err := configs.DB.Where("id = ?", id).First(b).Error; err != nil {
+func GetOneBook(DB *gorm.DB, b *Book, id string) (err error) {
+	if err := DB.Where("id = ?", id).First(b).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func PutOneBook(b *Book, id string) (err error) {
-	configs.DB.Save(b)
+func PutOneBook(DB *gorm.DB, b *Book, id string) (err error) {
+	DB.Save(b)
 	return nil
 }
 
-func DeleteBook(b *Book, id string) (err error) {
-	configs.DB.Where("id = ?", id).Delete(b)
+func DeleteBook(DB *gorm.DB, b *Book, id string) (err error) {
+	DB.Where("id = ?", id).Delete(b)
 	return nil
 }

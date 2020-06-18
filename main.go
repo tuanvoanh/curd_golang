@@ -32,7 +32,7 @@ func main() {
 	db.AutoMigrate(&models.Book{})
 
 	r := gin.Default()
-	routers.SetupRouter(r)
+	routers.SetupRouter(r, db)
 	fmt.Println(r.Run(":" + os.Getenv("PORT")))
 
 }

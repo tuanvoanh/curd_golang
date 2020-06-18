@@ -7,11 +7,13 @@ import (
 	"API_BASIC_LEARN/models"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 )
 
 func ListBook(c *gin.Context) {
+	DB := c.MustGet("DB").(*gorm.DB)
 	var book []models.Book
-	err := models.GetAllBook(&book)
+	err := models.GetAllBook(DB, &book)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	} else {
@@ -20,6 +22,7 @@ func ListBook(c *gin.Context) {
 }
 
 func AddNewBook(c *gin.Context) {
+	DB := c.MustGet("DB").(*gorm.DB)
 	var book models.Book
 	var input CreateRequest
 
@@ -34,7 +37,7 @@ func AddNewBook(c *gin.Context) {
 		Category: input.Category,
 		Price:    input.Price,
 	}
-	err := models.AddNewBook(&book)
+	err := models.AddNewBook(DB, &book)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	} else {
@@ -43,9 +46,10 @@ func AddNewBook(c *gin.Context) {
 }
 
 func GetOneBook(c *gin.Context) {
+	DB := c.MustGet("DB").(*gorm.DB)
 	id := c.Param("id")
 	var book models.Book
-	err := models.GetOneBook(&book, id)
+	err := models.GetOneBook(DB, &book, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	} else {
@@ -54,10 +58,11 @@ func GetOneBook(c *gin.Context) {
 }
 
 func PutOneBook(c *gin.Context) {
+	DB := c.MustGet("DB").(*gorm.DB)
 	var book models.Book
 	var input CreateRequest
 	id := c.Params.ByName("id")
-	err := models.GetOneBook(&book, id)
+	err := models.GetOneBook(DB, &book, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -72,7 +77,7 @@ func PutOneBook(c *gin.Context) {
 	book.Category = input.Category
 	book.Price = input.Price
 
-	models.PutOneBook(&book, id)
+	models.PutOneBook(DB, &book, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	} else {
@@ -81,9 +86,10 @@ func PutOneBook(c *gin.Context) {
 }
 
 func DeleteBook(c *gin.Context) {
+	DB := c.MustGet("DB").(*gorm.DB)
 	var book models.Book
 	id := c.Params.ByName("id")
-	err := models.DeleteBook(&book, id)
+	err := models.DeleteBook(DB, &book, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 	} else {

@@ -5,11 +5,10 @@ import (
 )
 
 // DB ...
-var DB *gorm.DB
-var err error
+// var DB *gorm.DB
+// var err error
 
 // ConnectDatabase ...
 func ConnectDatabase(dbType string, dbURI string) (*gorm.DB, error) {
-	DB, err = gorm.Open(dbType, dbURI)
-	return DB, err
+	return gorm.Open(dbType, dbURI)
 }
